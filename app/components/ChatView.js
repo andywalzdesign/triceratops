@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import io from 'socket.io-client';
 
-let room = null;
 let socket = null;
 let chatSession = {
   user: null,
-  expertId: null
+  expertId: null,
+  room: null,
+  category: null
 };
 
 const heroku = 'https://savvyshopper.herokuapp.com';
@@ -32,14 +33,16 @@ export default class ChatView extends Component {
   // automatically runs when component loads
   componentDidMount() {
     socket = io(heroku);
+
     if(!this.props.user.shopperExpert){
 
       //store information on chatSession
       chatSession.user = this.props.user;
+      chatSession.category = this.props.category;
 
       socket.on('id', (socketId) => {
-        socket.emit('createRoom', socketId, chatSession.user.id);
-        room = socketId;
+        chatSession.room = socketId;
+        socket.emit('createRoom', chatSession.room, chatSession.user, chatSession.category);
         console.log('*** NEW ROOM ***', socketId);
       });
 

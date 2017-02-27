@@ -41,20 +41,43 @@ const io = require('socket.io')(server);
 
 // QUEUE OF USERS REQUESTING ASSISTANCE
 let queue = {
-  'HOME': [],
-  'FOOD': [],
-  'TECH': [],
-  'WOMEN\'S FASHION': [],
-  'MEN\'S FASHION': [],
-  'ENTERTAINMENT': []
+  'HOME': [], // [user1, user2, user3]
+  'FOOD': [], // [user4, user5]
+  'TECH': [], // []
+  'WOMEN\'S FASHION': [], // [user6]
+  'MEN\'S FASHION': [], // []
+  'ENTERTAINMENT': [] // [user7, user8]
 };
 
 // TEMPORARY ACTIVE EXPERT LIST (Hardcoded)
+// Experts added and removed from Experts object when toggling Online/Offline client side
 let experts = {
   // Expert ID as Prop
   1: {
-    userId: undefined,
-    categories: ['home']
+    user: undefined,
+    categories: ['HOME']
+  }
+};
+
+// worker function that runs every ~30 seconds
+// goes to the queue object
+// for each category in the queue
+  // if a user is in the queue
+    // connect user with expert in that category (via findExpert Function)
+
+// Repeat until all queues are empty or no experts available in category
+
+//
+let findExpert = function(category) {
+  for (var expert in experts) {
+    if (!experts[expert].user) {
+      experts[expert].categories.forEach(function(cat) {
+        if (cat === category) {
+          experts[expert].user = queue[category].shift();
+          return;
+        }
+      });
+    }
   }
 };
 
@@ -84,15 +107,17 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, userId) {
-    console.log('Joining Room:', room, 'User:', userId);
+  socket.on('createRoom', function(room, user, category) {
+    console.log('Joining Room:', room, 'User:', user, 'Category:', category);
     socket.join(room);
-    var user = {
-      id: userId,
-      room: room
-    };
-    queue.push(user);
-    console.log('Current Queue:', queue);
+    // Add room to user object
+    user.room = room;
+    // Find Category in Queue and Push User
+    queue[category].push(user);
+    console.log('Current Queue for Category:', queue[category]);
+
+    // FIRE FUNCTION TO LOOP OVER ACTIVE & AVAILABLE EXPERTS
+
     io.in(room).emit('message', {message: '*** Finding Expert ***'});
   });
 
