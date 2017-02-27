@@ -41,12 +41,12 @@ const io = require('socket.io')(server);
 
 // QUEUE OF USERS REQUESTING ASSISTANCE
 let queue = {
-  home: [],
-  food: [],
-  mensfashion: [],
-  womensfashion: [],
-  tech: [],
-  entertainment: []
+  'HOME': [],
+  'FOOD': [],
+  'TECH': [],
+  'WOMEN\'S FASHION': [],
+  'MEN\'S FASHION': [],
+  'ENTERTAINMENT': []
 };
 
 // TEMPORARY ACTIVE EXPERT LIST (Hardcoded)

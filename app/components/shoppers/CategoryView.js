@@ -43,12 +43,12 @@ export default class CategoryView extends Component {
     super(props);
   }
 
-  openChat() {
-    console.log("CATEGORY USER PROPS TONY", this.props)
+  openChat(category) {
     this.props.navigator.push({
       screen: 'Chat',
       passProps: {
-        user: this.props.user
+        user: this.props.user,
+        category: category
       }
     });
   }
