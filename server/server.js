@@ -40,7 +40,23 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 // QUEUE OF USERS REQUESTING ASSISTANCE
-let queue = [];
+let queue = {
+  home: [],
+  food: [],
+  mensfashion: [],
+  womensfashion: [],
+  tech: [],
+  entertainment: []
+};
+
+// TEMPORARY ACTIVE EXPERT LIST (Hardcoded)
+let experts = {
+  // Expert ID as Prop
+  1: {
+    userId: undefined,
+    categories: ['home']
+  }
+};
 
 // DETERMINE IF USER CURRENTLY IN QUEUE
 app.get('/api/userQueue', function(req, res) {
