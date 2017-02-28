@@ -59,7 +59,10 @@ export default class ChatView extends Component {
       });
     }
     if(this.props.user.shopperExpert){
-      fetch(heroku + '/api/userQueue/getUser', {
+      //needs to be fetched from the account prefs to see what categories this user is an expert in
+      var categories = ['HOME'];
+      var index = 0;
+      fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser/' + categories[index], {
         method: 'GET',
         jsonp: false,
         headers: {
@@ -86,6 +89,11 @@ export default class ChatView extends Component {
               messages: this.state.messages.concat([message])
             });
           });
+        }
+        if(index < categories.length){
+          index++;
+        } else {
+          index = 0;
         }
       })
       .done();
