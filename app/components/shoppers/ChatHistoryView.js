@@ -11,10 +11,32 @@ export default class ChatHistoryView extends Component {
 
   constructor(props) {
     super(props);
+    categoriesToHelpIn = [];
   }
 
-  checkUserQueue() {
-    // check if user in queue
+  loadCategoryQueueLength(category) {
+    //Fetch category queue length
+    fetch('https://savvyshopper.herokuapp.com/api/userQueue/' + category, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      if(response){
+        //add category help button for expert to help first user in that queue
+        this.categoriesToHelpIn.push(category);
+      }
+      return;
+    }).done();
+  }
+
+  componentDidMount() {
+    //need to load categories for the logged in expert
+    var categories = ['HOME'];
+    for(var i = 0; i < categories.length; i++){
+      loadCategoryQueueLength(categories[i]);
+    }
   }
 
   navigate(scene) {
