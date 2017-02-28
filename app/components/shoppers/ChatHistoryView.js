@@ -52,11 +52,14 @@ export default class ChatHistoryView extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Chat History</Text>
-        {this.props.getActive() && <TouchableHighlight
+        {this.props.getActive() && this.categoriesToHelpIn.map((category) => {
+          <TouchableHighlight
           style={styles.button}
           onPress={() => this.navigate('Chat')}>
-          <Text style={styles.buttonText}>HALP</Text>
-        </TouchableHighlight>}
+          <Text style={styles.buttonText}>HALP IN {category}</Text>
+        </TouchableHighlight>
+        })
+      }
       </View>
     )
   }
