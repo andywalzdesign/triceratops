@@ -11,7 +11,7 @@ export default class ChatHistoryView extends Component {
 
   constructor(props) {
     super(props);
-    categoriesToHelpIn = [];
+    this.categoriesToHelpIn = [];
   }
 
   loadCategoryQueueLength(category) {
@@ -50,6 +50,7 @@ export default class ChatHistoryView extends Component {
   }
 
   render() {
+    console.log("CATS TO HELP IN", this.categoriesToHelpIn);
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Chat History</Text>

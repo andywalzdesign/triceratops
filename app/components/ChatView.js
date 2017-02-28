@@ -22,7 +22,7 @@ const local = 'http://localhost:2300';
 export default class ChatView extends Component {
 
   constructor(props) {
-    console.log("CHAT VIEW PROPS", props);
+    // console.log("CHAT VIEW PROPS", props);
     super(props);
     this.state = {
       message: '',
@@ -40,19 +40,22 @@ export default class ChatView extends Component {
       chatSession.user = this.props.user;
       chatSession.category = this.props.category;
 
+      console.log("USER IN CHAT", chatSession.user);
+
       socket.on('id', (socketId) => {
         chatSession.room = socketId;
-        socket.emit('createRoom', chatSession.room, chatSession.user, chatSession.category);
-        console.log('*** NEW ROOM ***', socketId);
+        // socket.emit('createRoom', chatSession.room, chatSession.user, chatSession.category);
+        socket.emit('createRoom', chatSession.room, chatSession.user.id, chatSession.user.username, chatSession.category);
+        // console.log('*** NEW ROOM ***', socketId);
       });
 
       socket.on('expert', (expertId) => {
         chatSession.expertId = expertId;
-        console.log('ExpertId Recieved:', expertId);
+        // console.log('ExpertId Recieved:', expertId);
       });
 
       socket.on('message', (message) => {
-        console.log('Incoming Message:', message);
+        // console.log('Incoming Message:', message);
         this.setState({
           messages: this.state.messages.concat([message])
         });
