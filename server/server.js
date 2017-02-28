@@ -74,11 +74,12 @@ let findExpert = function(category) {
       experts[expert].categories.forEach(function(cat) {
         if (cat === category) {
           experts[expert].user = queue[category].shift();
-          return;
+          return true;
         }
       });
     }
   }
+  return false;
 };
 
 // DETERMINE IF USER CURRENTLY IN QUEUE
@@ -101,6 +102,18 @@ app.get('/api/userQueue/getUser', function(req, res) {
   }
 });
 
+// REMOVE FIRST USER FROM CATEGORY USER QUEUE AND SEND TO EXPERT
+app.get('/api/userQueue/getUser/:category', function(req, res) {
+  if (queue.length) {
+    var category = req.params.category;
+    var user = queue[category].shift();
+    console.log('New Queue:', queue);
+    res.send(user);
+  } else {
+    res.send('User taken.');
+  }
+});
+
 // RUNS WHEN USER STARTS A SOCKET CONNECTION
 io.on('connection', function(socket) {
   console.log('Client Connected:', socket.id);
@@ -112,13 +125,18 @@ io.on('connection', function(socket) {
     socket.join(room);
     // Add room to user object
     user.room = room;
-    // Find Category in Queue and Push User
-    queue[category].push(user);
     console.log('Current Queue for Category:', queue[category]);
 
-    // FIRE FUNCTION TO LOOP OVER ACTIVE & AVAILABLE EXPERTS
-
     io.in(room).emit('message', {message: '*** Finding Expert ***'});
+
+    // FIRE FUNCTION TO LOOP OVER ACTIVE & AVAILABLE EXPERTS
+    if(findExpert(category)){
+      // Find Category in Queue and Push User
+      queue[category].push(user);
+    } else {
+      // send a message that no experts are available and they are X in line
+      io.in(room).emit('message', {message: '*** Experts Busy, Please Wait ***'});
+    }
   });
 
   // RUNS WHEN EXPERT JOINS CHATROOM
