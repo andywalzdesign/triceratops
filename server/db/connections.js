@@ -6,7 +6,7 @@ var mongooseConnectionURL;
 if (process.env.MONGODB_URI) {
   mongooseConnectionURL = process.env.MONGODB_URI;
 } else {
-  mongooseConnectionURL = 'mongodb://localhost/';
+  mongooseConnectionURL = 'mongodb://localhost:27017/';
 }
 
 //Postgres Connection Using Sequelize

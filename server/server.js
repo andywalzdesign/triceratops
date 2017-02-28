@@ -92,11 +92,11 @@ app.get('/api/userQueue', function(req, res) {
 });
 
 // DETERMINE HOW MANY USERS CURRENTLY IN CATEGORY QUEUE
-app.get('/api/userQueue/:category', function(req, res) {
+app.get('/api/userQueue/queue/:category', function(req, res) {
   if (queue[req.params.category].length) {
-    res.send(queue[req.params.category].length);
+    res.send(JSON.stringify(queue[req.params.category].length));
   } else {
-    res.send(0);
+    res.send(JSON.stringify(0));
   }
 });
 

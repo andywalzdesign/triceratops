@@ -62,7 +62,7 @@ export default class ChatView extends Component {
       //needs to be fetched from the account prefs to see what categories this user is an expert in
       var categories = ['HOME'];
       var index = 0;
-      fetch('https://savvyshopper.herokuapp.com/api/userQueue/getUser/' + categories[index], {
+      fetch('http://localhost:2300/api/userQueue/getUser/' + categories[index], {
         method: 'GET',
         jsonp: false,
         headers: {

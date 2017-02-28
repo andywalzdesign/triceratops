@@ -16,14 +16,15 @@ export default class ChatHistoryView extends Component {
 
   loadCategoryQueueLength(category) {
     //Fetch category queue length
-    fetch('https://savvyshopper.herokuapp.com/api/userQueue/' + category, {
+    fetch('http://localhost:2300/api/userQueue/queue/' + category, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
-    }).then((response) => {
-      if(response){
+    }).then((res) => res.json()).then((queueLength) => {
+      console.log("QUEUELENGTH", queueLength);
+      if(queueLength){
         //add category help button for expert to help first user in that queue
         this.categoriesToHelpIn.push(category);
       }
@@ -35,7 +36,7 @@ export default class ChatHistoryView extends Component {
     //need to load categories for the logged in expert
     var categories = ['HOME'];
     for(var i = 0; i < categories.length; i++){
-      loadCategoryQueueLength(categories[i]);
+      this.loadCategoryQueueLength(categories[i]);
     }
   }
 
