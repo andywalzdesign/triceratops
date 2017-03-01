@@ -119,7 +119,7 @@ app.get('/api/userQueue/getUser/:category', function(req, res) {
     console.log('New Queue:', queue);
     res.send(user);
   } else {
-    res.send('User taken.');
+    res.send(JSON.stringify('User taken.'));
   }
 });
 
