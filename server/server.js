@@ -129,11 +129,16 @@ io.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   // RUNS WHEN USER CREATES CHATROOM
-  socket.on('createRoom', function(room, user, category) {
-    console.log('Joining Room:', room, 'User:', user, 'Category:', category);
+  socket.on('createRoom', function(room, userId, username, category) {
+    console.log('Joining Room:', room, 'User:', userId, 'Category:', category);
     socket.join(room);
+    var user = {};
+    user.id = userId;
+    user.username = room;
+    user.category = category;
     // Add room to user object
     user.room = room;
+
     console.log('Current Queue for Category:', queue[category]);
 
     io.in(room).emit('message', {message: '*** Finding Expert ***'});
@@ -142,7 +147,10 @@ io.on('connection', function(socket) {
     if(findExpert(category)){
       // Find Category in Queue and Push User
       queue[category].push(user);
+      console.log("QUEUE IN HOME", queue[category]);
     } else {
+      queue[category].push(user);
+      console.log("DIDNT FIRE", queue[category]);
       // send a message that no experts are available and they are X in line
       io.in(room).emit('message', {message: '*** Experts Busy, Please Wait ***'});
     }
