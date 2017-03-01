@@ -152,7 +152,7 @@ export default class ChatView extends Component {
     //Need to flip sender/reciever based on user/expert
     console.log('Sending Message.');
     let message = {
-      chatSessionID: room,
+      chatSessionID: chatSession.room,
       message: this.state.message,
       date: new Date()
     };
