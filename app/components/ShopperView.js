@@ -16,8 +16,38 @@ export default class ShopperView extends Component {
     console.log("PROPS", props);
     super(props);
     this.state = {
-      isActive: false
+      isActive: false,
+      isLoading: true,
+      categoriesToHelpIn: []
     };
+  }
+
+  loadCategoryQueueLength(category) {
+    //Fetch category queue length
+    fetch('http://localhost:2300/api/userQueue/queue/' + category, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.json()).then((queueLength) => {
+      console.log("QUEUELENGTH", queueLength);
+      // if(queueLength > 0){
+        //add category help button for expert to help first user in that queue
+        this.state.categoriesToHelpIn.push(category);
+        console.log("MEOW", this.state.categoriesToHelpIn);
+      // }
+      // return;
+    }).done();
+  }
+
+  componentDidMount() {
+    //need to load categories for the logged in expert
+    var categories = ['HOME'];
+    for(var i = 0; i < categories.length; i++){
+      this.loadCategoryQueueLength(categories[i]);
+    }
+    this.setState({isLoading: false});
   }
 
   activeSwitcher() {
@@ -33,7 +63,7 @@ export default class ShopperView extends Component {
       return (
         <Swiper style={styles.wrapper} loop={false} showsButtons={true}>
           <View style={styles.slide2}>
-            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} expertCats={this.state} />
           </View>
           <View style={styles.slide3}>
             <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />
@@ -47,7 +77,7 @@ export default class ShopperView extends Component {
             <CategoryView navigator={this.props.navigator} user={this.props} />
           </View>
           <View style={styles.slide2}>
-            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} />
+            <ChatHistoryView navigator={this.props.navigator} user={this.props} getActive={this.getActive.bind(this)} expertCats={this.state} />
           </View>
           <View style={styles.slide3}>
             <AccountView navigator={this.props.navigator} user={this.props} activeSwitcher={this.activeSwitcher.bind(this)} getActive={this.getActive.bind(this)} />

@@ -11,34 +11,13 @@ export default class ChatHistoryView extends Component {
 
   constructor(props) {
     super(props);
-    this.categoriesToHelpIn = [];
   }
 
-  loadCategoryQueueLength(category) {
-    //Fetch category queue length
-    fetch('http://localhost:2300/api/userQueue/queue/' + category, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => res.json()).then((queueLength) => {
-      console.log("QUEUELENGTH", queueLength);
-      if(queueLength){
-        //add category help button for expert to help first user in that queue
-        this.categoriesToHelpIn.push(category);
-      }
-      return;
-    }).done();
-  }
-
-  componentDidMount() {
-    //need to load categories for the logged in expert
-    var categories = ['HOME'];
-    for(var i = 0; i < categories.length; i++){
-      this.loadCategoryQueueLength(categories[i]);
-    }
-  }
+  // getInitialState() {
+  //   return {
+  //     isLoading: true
+  //   };
+  // }
 
   navigate(scene) {
     this.props.navigator.push({
@@ -50,18 +29,22 @@ export default class ChatHistoryView extends Component {
   }
 
   render() {
-    console.log("CATS TO HELP IN", this.categoriesToHelpIn);
+    if(this.props.expertCats.isLoading){
+      console.log("LURDING");
+      return <View><Text>Lurding...</Text></View>;
+    }
+    console.log("CATS TO HELP IN", this.props.expertCats.categoriesToHelpIn);
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Chat History</Text>
-        {this.props.getActive() && this.categoriesToHelpIn.map((category) => {
-          <TouchableHighlight
-          style={styles.button}
-          onPress={() => this.navigate('Chat')}>
-          <Text style={styles.buttonText}>HALP IN {category}</Text>
-        </TouchableHighlight>
-        })
-      }
+        {this.props.getActive() && this.props.expertCats.categoriesToHelpIn.map((category) => {
+          console.log(this.props.expertCats.categoriesToHelpIn);
+          return (
+            <TouchableHighlight style={styles.button} onPress={() => this.navigate('Chat')}>
+              <Text style={styles.buttonText}>HALP IN {category}</Text>
+            </TouchableHighlight>
+          )
+        })}
       </View>
     )
   }
