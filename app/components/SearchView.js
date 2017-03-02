@@ -16,6 +16,8 @@ import AvailableExperts from './AvailableExperts';
 import Tabs from 'react-native-tabs';
 import { SearchBar } from 'react-native-elements'
 
+const heroku = 'https://savvyshopper.herokuapp.com';
+
 export default class SearchView extends Component {
   constructor(props){
     super(props);
@@ -27,6 +29,23 @@ export default class SearchView extends Component {
 
   activeSwitcher() {
     this.setState({isActive: !this.state.isActive});
+    this.setExpertToAvailable();
+  }
+
+  setExpertToAvailable(){
+    fetch(heroku + '/api/expert/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: {
+        id: this.props.id,
+        user: undefined,
+        categories:
+      }
+    })
+    .then((response) => response.json()).then((user) => console.log("EXPERT", user);).done();
   }
 
   getActive() {

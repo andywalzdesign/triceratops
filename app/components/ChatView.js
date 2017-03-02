@@ -65,11 +65,10 @@ export default class ChatView extends Component {
     if(this.props.shopperExpert){
       console.log("YOU ARE A SHOPPER EXPERT");
       //needs to be fetched from the account prefs to see what categories this user is an expert in
-      var categories = ['HOME'];
+      //var categories = ['HOME'];
       var index = 0;
       fetch(heroku + '/api/userQueue/getUser/' + categories[index], {
         method: 'GET',
-        jsonp: false,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -85,9 +84,9 @@ export default class ChatView extends Component {
           console.log('UserId Recieved:', id);
           chatSession.user = {id: id};
           chatSession.expertId = this.props.id;
-          console.log('*** JOINING ROOM ***', room);
-          socket.emit('joinRoom', room, chatSession.expertId);
-          room = room;
+          console.log('*** JOINING ROOM ***', chatSession.room);
+          socket.emit('joinRoom', chatSession.room, chatSession.expertId);
+          //room = room;
           socket.on('message', (message) => {
             console.log('Incoming Message:', message);
             this.setState({
@@ -165,7 +164,7 @@ export default class ChatView extends Component {
       message.senderID = chatSession.id;
       message.receiverID = chatSession.expertId;
     };
-    socket.emit('message', message, room);
+    socket.emit('message', message, chatSession.room);
     this.setState({message: ''});
     return false;
   }

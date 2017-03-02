@@ -53,10 +53,10 @@ let queue = {
 // Experts added and removed from Experts object when toggling Online/Offline client side
 let experts = {
   // Expert ID as Prop
-  1: {
-    user: undefined,
-    categories: ['HOME']
-  }
+  // 1: {
+  //   user: undefined,
+  //   categories: ['HOME']
+  // }
 };
 
 // worker function that runs every ~30 seconds
@@ -123,6 +123,14 @@ app.get('/api/userQueue/getUser/:category', function(req, res) {
   }
 });
 
+// ADD ACTIVE EXPERT TO EXPERT OBJECT
+app.post('/api/expert/', function(req, res) {
+  var expertInfo = req.body;
+  experts[req.body.id] = expertInfo;
+  res.send(JSON.stringify(experts[req.body.id]));
+});
+
+
 // RUNS WHEN USER STARTS A SOCKET CONNECTION
 io.on('connection', function(socket) {
   console.log('Client Connected:', socket.id);
@@ -149,7 +157,6 @@ io.on('connection', function(socket) {
       queue[category].push(user);
       console.log("QUEUE IN HOME", queue[category]);
     } else {
-      queue[category].push(user);
       console.log("DIDNT FIRE", queue[category]);
       // send a message that no experts are available and they are X in line
       io.in(room).emit('message', {message: '*** Experts Busy, Please Wait ***'});

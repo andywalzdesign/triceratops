@@ -47,7 +47,7 @@ export default class CategoryView extends Component {
     this.props.navigator.push({
       screen: 'Chat',
       passProps: {
-        user: this.props.user,
+        user: this.props,
         category: category
       }
     });
