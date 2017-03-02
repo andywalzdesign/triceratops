@@ -32,12 +32,13 @@ export default class ChatView extends Component {
 
   // automatically runs when component loads
   componentDidMount() {
-    socket = io(heroku);
+    socket = io(heroku, {jsonp: false});
 
-    if(!this.props.user.shopperExpert){
-
+    if(!this.props.shopperExpert){
+      console.log("YOU ARE A USER");
       //store information on chatSession
-      chatSession.user = this.props.user;
+      chatSession.id = this.props.id;
+      chatSession.username = this.props.username;
       chatSession.category = this.props.category;
 
       console.log("USER IN CHAT", chatSession.user);
@@ -45,7 +46,7 @@ export default class ChatView extends Component {
       socket.on('id', (socketId) => {
         chatSession.room = socketId;
         // socket.emit('createRoom', chatSession.room, chatSession.user, chatSession.category);
-        socket.emit('createRoom', chatSession.room, chatSession.user.id, chatSession.user.username, chatSession.category);
+        socket.emit('createRoom', chatSession.room, chatSession.id, chatSession.username, chatSession.category);
         // console.log('*** NEW ROOM ***', socketId);
       });
 
@@ -61,11 +62,12 @@ export default class ChatView extends Component {
         });
       });
     }
-    if(this.props.user.shopperExpert){
+    if(this.props.shopperExpert){
+      console.log("YOU ARE A SHOPPER EXPERT");
       //needs to be fetched from the account prefs to see what categories this user is an expert in
       var categories = ['HOME'];
       var index = 0;
-      fetch('http://localhost:2300/api/userQueue/getUser/' + categories[index], {
+      fetch(heroku + '/api/userQueue/getUser/' + categories[index], {
         method: 'GET',
         jsonp: false,
         headers: {
@@ -80,12 +82,12 @@ export default class ChatView extends Component {
             'Incorrect Username or Password.'
           )
         } else {
-          console.log('UserId Recieved:', user.id);
-          chatSession.user = {id: user.id};
-          chatSession.expertId = this.props.user.id;
-          console.log('*** JOINING ROOM ***', user.room);
-          socket.emit('joinRoom', user.room, chatSession.expertId);
-          room = user.room;
+          console.log('UserId Recieved:', id);
+          chatSession.user = {id: id};
+          chatSession.expertId = this.props.id;
+          console.log('*** JOINING ROOM ***', room);
+          socket.emit('joinRoom', room, chatSession.expertId);
+          room = room;
           socket.on('message', (message) => {
             console.log('Incoming Message:', message);
             this.setState({
@@ -156,11 +158,11 @@ export default class ChatView extends Component {
       message: this.state.message,
       date: new Date()
     };
-    if(this.props.user.shopperExpert){
+    if(this.props.shopperExpert){
       message.senderID = chatSession.expertId;
-      message.receiverID = chatSession.user.id;
+      message.receiverID = chatSession.id;
     } else {
-      message.senderID = chatSession.user.id;
+      message.senderID = chatSession.id;
       message.receiverID = chatSession.expertId;
     };
     socket.emit('message', message, room);
@@ -192,7 +194,7 @@ export default class ChatView extends Component {
             style={styles.button}>
             <Text style={styles.buttonText}>Send Message</Text>
           </TouchableHighlight>
-          {!this.props.user.shopperExpert &&
+          {!this.props.shopperExpert &&
             <TouchableHighlight
               onPress={(this.disconnect.bind(this))}
               style={styles.button}>

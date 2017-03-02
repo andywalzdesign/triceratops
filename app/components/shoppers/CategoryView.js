@@ -64,7 +64,7 @@ export default class CategoryView extends Component {
               <View style={styles.category}>
                   <Tile
                   user={this.props}
-                  onPress={(this.openChat.bind(this))}
+                  onPress={() => this.openChat(category)}
                   key={category}
                   imageSrc={loadCategoryImage(category.toLowerCase())}
                   title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
