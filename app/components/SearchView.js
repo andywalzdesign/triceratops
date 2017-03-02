@@ -39,13 +39,12 @@ export default class SearchView extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
         id: this.props.id,
-        user: undefined,
-        categories:
-      }
+        user: undefined
+      })
     })
-    .then((response) => response.json()).then((user) => console.log("EXPERT", user);).done();
+    .then((response) => response.json()).then((user) => console.log("EXPERT", user)).done();
   }
 
   getActive() {
