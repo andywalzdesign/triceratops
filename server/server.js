@@ -127,6 +127,7 @@ app.get('/api/userQueue/getUser/:category', function(req, res) {
 app.post('/api/expert/', function(req, res) {
   var expertInfo = req.body;
   experts[req.body.id] = expertInfo;
+  console.log("ACTIVE EXPERTS", experts);
   res.send(JSON.stringify(experts[req.body.id]));
 });
 
