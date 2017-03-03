@@ -1,0 +1,52 @@
+{
+  "name": "savvyshopper",
+  "version": "1.0.0",
+  "description": "an expert for almost anything",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha ./tests",
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrr21-triceratops/triceratops.git"
+  },
+  "keywords": [
+    "savvyShopper"
+  ],
+  "author": "Tony Hyde",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonyhyde/SavvyShopper/issues"
+  },
+  "homepage": "https://github.com/tonyhyde/SavvyShopper#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.16.1",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "express-jwt": "^0.3.1",
+    "jsonwebtoken": "^5.0.1",
+    "live-server": "^1.2.0",
+    "lodash": "^2.4.2",
+    "mongoose": "^4.8.2",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.2",
+    "socket.io": "^1.7.3",
+    "ws": "^2.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "compression": "^1.0.11",
+    "dotenv": "^0.4.0",
+    "errorhandler": "^1.1.1",
+    "lodash": "^2.4.1",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0",
+    "sequelize": "^3.30.2"
+  }
+}

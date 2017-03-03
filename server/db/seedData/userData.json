@@ -1,0 +1,36 @@
+[{
+  "id": 1,
+  "username": "triceratops1@gmail.com",
+  "password": "123",
+  "averageRating": 4.5,
+  "shopperExpert": true,
+  "active": true,
+  "closedChatSessions": []
+},
+{
+  "id": 2,
+  "username": "triceratops2@gmail.com",
+  "password": "123",
+  "averageRating": 3.5,
+  "shopperExpert": true,
+  "active": false,
+  "closedChatSessions": []
+},
+{
+  "id": 3,
+  "username": "triceratops3@gmail.com",
+  "password": "123",
+  "averageRating": 3.5,
+  "shopperExpert": false,
+  "active": false,
+  "closedChatSessions": []
+},
+{
+  "id": 4,
+  "username": "triceratops4@gmail.com",
+  "password": "123",
+  "averageRating": 4.75,
+  "shopperExpert": true,
+  "active": true,
+  "closedChatSessions": []
+}]

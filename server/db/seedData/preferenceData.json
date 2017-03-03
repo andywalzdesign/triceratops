@@ -1,0 +1,11 @@
+[{
+  "id": 1,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 1
+}]

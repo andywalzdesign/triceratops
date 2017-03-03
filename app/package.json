@@ -1,0 +1,29 @@
+{
+  "name": "SavvyShopper",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "15.4.2",
+    "react-native": "0.41.2",
+    "react-native-elements": "^0.9.7",
+    "react-native-star-rating": "^1.0.7",
+    "react-native-gifted-chat": "^0.1.3",
+    "react-native-swiper": "^1.5.4",
+    "react-native-tabs": "^1.0.9",
+    "react-native-vector-icons": "^4.0.0",
+    "socket.io-client": "^1.7.3"
+  },
+  "devDependencies": {
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "18.1.0",
+    "react-test-renderer": "15.4.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

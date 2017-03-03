@@ -1,0 +1,32 @@
+[{
+  "id": 1,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 1
+},{
+  "id": 2,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 2
+},
+{
+  "id": 3,
+  "home": false,
+  "food": true,
+  "technology": false,
+  "womensFashion": true,
+  "mensFashion": false,
+  "sports": true,
+  "entertainment": false,
+  "userId": 4
+}]
